@@ -1,0 +1,24 @@
+@import './scheme.less';
+
+#content {
+    position: absolute;
+    top: 0;
+    left: 200px;
+    width: calc(100vw - 200px);
+    height: 100vh;
+    transition: @menuAniTime ease-out;
+    background-color: @lightBgc;
+
+    .main {
+        position: absolute;
+        overflow-y: scroll;
+        width: 100%;
+        height: calc(100% - @footerHeight);
+        padding: 20px;
+        font-size: 16px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

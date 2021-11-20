@@ -1,0 +1,87 @@
+@import './scheme.less';
+
+@titleHeight: 80px;
+
+#menu-wrapper {
+    position: fixed;
+    margin: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: @darkBgc;
+    border-right: 1px solid @borderColor;
+    transition: @menuAniTime ease-out;
+    user-select: none;
+
+    #menu {
+        width: 100%;
+        height: calc(100vh - @footerHeight - @titleHeight);
+        overflow-y: auto;
+    }
+
+    h2 {
+        margin: 0;
+        background-color: transparent;
+        padding: 20px 0 0 20px;
+    }
+
+    hr {
+        border-width: 4px;
+        border-color: black;
+        margin: 10px 10px;
+    }
+
+    ul {
+        // position: absolute;
+        list-style-type: none;
+        padding: 0;
+
+        li {
+            display: block;
+            width: 100%;
+            height: 110px;
+            padding: 0 20px;
+            transition: 0.1s ease-in-out;
+            border-top: 1px solid @darkHover;
+            word-wrap: break-word;
+
+            &:hover {
+                background-color: @darkHover;
+            }
+
+            &:active {
+                background-color: @darkActive;
+            }
+
+            &.active {
+                background-color: @darkActive;
+            }
+
+            .date {
+                margin-bottom: 5px;
+                font-size: 10px;
+            }
+
+            h4 {
+                margin-top: 10px;
+                font-weight: bold;
+            }
+
+
+        }
+
+        li:last-child {
+            border-bottom: 1px solid @darkHover;
+        }
+    }
+
+    .footer {
+        #add-btn {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #del-btn {
+            right: 0;
+        }
+    }
+}

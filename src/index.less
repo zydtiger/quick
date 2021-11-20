@@ -1,0 +1,129 @@
+@import './scheme.less';
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: @scrollColor;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: @scrollActive;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.footer-btn {
+  width: @footerHeight;
+  height: 100%;
+  color: @btnColor;
+  user-select: none;
+
+  &:hover {
+    background-color: @darkHover;
+  }
+
+  &:active {
+    background-color: @darkActive;
+  }
+}
+
+.note-btn {
+  position: absolute;
+  font-size: 14px;
+
+  div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.footer {
+  border-top: 1px solid @borderColor;
+  background-color: @darkBgc;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: @footerHeight;
+  transition: @menuAniTime ease-out;
+
+  .toggle-btn {
+    .footer-btn();
+
+    position: absolute;
+    font-size: 14px;
+
+    .collapse-btn {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .expand-btn {
+      display: none;
+
+      .circle-border {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 7px;
+        border: 1px solid @btnColor;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .circle-fill {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-radius: 4px;
+        background-color: @btnColor;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &.collapsed {
+      .collapse-btn {
+        display: none;
+      }
+
+      .expand-btn {
+        display: block;
+
+        .circle-border {
+          display: block;
+        }
+
+        .circle-fill {
+          display: none;
+        }
+      }
+
+      &:hover {
+        .expand-btn .circle-fill {
+          display: block;
+        }
+      }
+    }
+  }
+}

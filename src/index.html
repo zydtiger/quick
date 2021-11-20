@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+</head>
+
+<body>
+    <div id="note-block">
+        <div id="menu-wrapper">
+            <h2>Notes</h2>
+            <hr>
+
+            <div id="menu">
+                <ul>
+                    <li v-for="(note, id) in notes" @click="chgContent(id)" :class="{ active : id == curId }">
+                        <h4>{{ note.title }}</h4>
+                        <div class="date">{{ note.date }}</div>
+                        <div>{{ note.summary }}</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer">
+                <div id="toggle-note" title="Toggles the Workspace" class="toggle-btn" @click="toggleNote"
+                    :class="{ 'collapsed' : contentCollapsed }">
+                    <div class="collapse-btn">&#62;</div>
+                    <div class="expand-btn">
+                        <div class="circle-border"></div>
+                        <div class="circle-fill"></div>
+                    </div>
+                </div>
+
+                <div id="add-btn" class="footer-btn note-btn" title="Adds a new note" @click="addNote">
+                    <div>+</div>
+                </div>
+
+                <div id="del-btn" class="footer-btn note-btn" title="Deletes a note" @click="delNote">
+                    <div class="fa fa-trash-o"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="content">
+            <div class="main" contenteditable="true" @input="updateContent" v-html="curContent"></div>
+
+            <div class="footer">
+                <div id="toggle-menu" title="Toggles the Menu" class="toggle-btn" @click="toggleMenu"
+                    :class="{ 'collapsed' : menuCollapsed }">
+                    <div class="collapse-btn">&#60;</div>
+                    <div class="expand-btn">
+                        <div class="circle-border"></div>
+                        <div class="circle-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
