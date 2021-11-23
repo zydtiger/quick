@@ -11,14 +11,21 @@
     <div id="note-block">
         <div id="menu-wrapper">
             <h2>Notes</h2>
+            <div class="classic-btn" id="toggle-search-btn" @click="searchToggled = !searchToggled">
+                <div :class="{ 'fa fa-search' : !searchToggled, 'fa fa-times' : searchToggled }"></div>
+            </div>
+            <div class="search_wrapper" v-if="searchToggled">
+                <input type="text" id="search" @input="search"/>
+                <div class="fa fa-search"></div>
+            </div>
             <hr>
 
             <div id="menu">
                 <ul>
-                    <li v-for="(note, id) in notes" @click="chgContent(id)" :class="{ active : id == curId }">
+                    <li v-for="(note, id) in filteredNotes" @click="chgContent(id)" :class="{ active : id == curId }">
                         <h4>{{ note.title }}</h4>
                         <div class="date">{{ note.date }}</div>
-                        <div>{{ note.summary }}</div>
+                        <div class="summary">{{ note.summary }}</div>
                     </li>
                 </ul>
             </div>

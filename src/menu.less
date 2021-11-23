@@ -5,7 +5,7 @@
 #menu-wrapper {
     position: fixed;
     margin: 0;
-    width: 200px;
+    width: @menuWidth;
     height: 100vh;
     background-color: @darkBgc;
     border-right: 1px solid @borderColor;
@@ -24,25 +24,62 @@
         padding: 20px 0 0 20px;
     }
 
+    #toggle-search-btn {
+        border: 1px solid @borderColor;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search_wrapper {
+        margin: 10px 20px;
+
+        input {
+            width: 100%;
+            outline: none;
+            border: 1px solid @borderColor;
+            border-radius: 2px;
+            padding-right: 20px;
+
+            &:focus {
+                border: 1px solid rgb(70, 146, 218);
+                box-shadow: 0 0 2px 0 rgb(70, 146, 218);
+            }
+        }
+
+        div.fa {
+            color: @borderColor;
+            float: right;
+            position: relative;
+            top: -20px;
+            right: 5px;
+        }
+    }
+
     hr {
+        width: calc(100% - 20px);
         border-width: 4px;
         border-color: black;
         margin: 10px 10px;
     }
 
     ul {
-        // position: absolute;
         list-style-type: none;
         padding: 0;
 
         li {
             display: block;
             width: 100%;
-            height: 110px;
+            height: 90px;
             padding: 0 20px;
             transition: 0.1s ease-in-out;
             border-top: 1px solid @darkHover;
-            word-wrap: break-word;
 
             &:hover {
                 background-color: @darkHover;
@@ -64,6 +101,17 @@
             h4 {
                 margin-top: 10px;
                 font-weight: bold;
+
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .summary {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                height: 40px;
             }
 
 

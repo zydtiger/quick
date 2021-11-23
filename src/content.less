@@ -3,8 +3,8 @@
 #content {
     position: absolute;
     top: 0;
-    left: 200px;
-    width: calc(100vw - 200px);
+    left: @menuWidth;
+    width: calc(100vw - @menuWidth);
     height: 100vh;
     transition: @menuAniTime ease-out;
     background-color: @lightBgc;
@@ -16,6 +16,7 @@
         height: calc(100% - @footerHeight);
         padding: 20px;
         font-size: 16px;
+        word-wrap: break-word;
 
         &:focus {
             outline: none;

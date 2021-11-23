@@ -35,14 +35,14 @@ import './scheme.less'
 import $ from 'jquery';
 import Vue from 'vue';
 import { ipcRenderer } from 'electron';
-import lib, { Note } from './lib'
+import lib, { Note } from './lib';
 
 function removeIndex(arr: Array<Object>, index: number) {
-    return arr.slice(0, index).concat(arr.slice(index + 1, arr.length))
+    return arr.slice(0, index).concat(arr.slice(index + 1, arr.length));
 }
 
 async function run() {
-    let notes: Array<Note> = await ipcRenderer.invoke('get-notes')
+    let notes: Array<Note> = await ipcRenderer.invoke('get-notes');
     console.log('notes: ', notes);
 
     lib.getTitles(notes);
@@ -57,39 +57,45 @@ async function run() {
             notes: notes,
             chgCnt: 0,
             curContent: notes[0]?.content,
+            searchToggled: false,
+            searchTag: ''
         },
         watch: {
             chgCnt() {
-                if (this.chgCnt == 10) this.save()
+                if (this.chgCnt == 10) this.save();
             },
+            searchToggled() {
+                if (!this.searchToggled) this.searchTag = '';
+                else setTimeout(() => $('#search').trigger('focus'));
+            }
         },
         methods: {
             save() {
-                ipcRenderer.send('save-notes', this.notes)
-                this.chgCnt = 0
+                ipcRenderer.send('save-notes', this.notes);
+                this.chgCnt = 0;
+                $('title').text(this.notes[this.curId].title);
             },
             toggleNote() {
-                console.log('cringu')
-
                 if (this.contentCollapsed) {
-                    $('#menu-wrapper').css('width', '200px')
-                    $('#content').css('left', '200px')
-                    ipcRenderer.send('restore-width')
+                    $('#menu-wrapper').css('width', '230px');
+                    $('#content').css('left', '230px');
+                    ipcRenderer.send('restore-width');
                 } else {
-                    $('#menu-wrapper').css('width', '400px')
-                    $('#content').css('left', '400px')
-                    ipcRenderer.send('resize-width', 400)
+                    $('#menu-wrapper').css('width', '400px');
+                    $('#content').css('left', '400px');
+                    ipcRenderer.send('resize-width', 400);
                 }
 
-                this.contentCollapsed = !this.contentCollapsed
+                this.contentCollapsed = !this.contentCollapsed;
             },
             addNote() {
-                this.notes.push({
+                this.notes.unshift({
                     title: 'New Note',
                     content: '',
                     date: lib.newNoteDate(),
-                })
-                this.save()
+                });
+                this.chgContent(0);
+                this.save();
             },
             delNote() {
                 ipcRenderer.invoke('message-box', {
@@ -99,34 +105,35 @@ async function run() {
                     buttons: ['OK', 'Cancel'],
                 }).then(res => {
                     if (res.response == 0) {
-                        this.notes = removeIndex(this.notes, this.curId)
+                        this.notes = removeIndex(this.notes, this.curId);
                         if (this.curId > 0)
-                            this.chgContent(this.curId-1)
+                            this.chgContent(this.curId-1);
                         else if (this.notes.length > 0)
-                            this.chgContent(this.curId)
-                        else this.curId = -1
-                        this.save()
+                            this.chgContent(this.curId);
+                        else this.curId = -1;
+                        this.save();
                     }
                 })
             },
             chgContent(id: number) {
                 if (id >= this.notes.length) return;
 
-                this.curId = id
-                if (this.contentCollapsed) this.toggleNote()
+                this.curId = id;
+                if (this.contentCollapsed) this.toggleNote();
 
-                this.save()
-                this.curContent = this.notes[this.curId].content
+                this.save();
+                $('title').text(this.notes[this.curId].title);
+                this.curContent = this.notes[this.curId].content;
             },
             toggleMenu() {
                 if (this.menuCollapsed) {
                     $('#menu-wrapper').css('left', '0');
                     $('#content').css({
-                        'left': '200px',
-                        'width': 'calc(100vw - 200px)'
+                        'left': '230px',
+                        'width': 'calc(100vw - 230px)'
                     });
                 } else {
-                    $('#menu-wrapper').css('left', '-200px');
+                    $('#menu-wrapper').css('left', '-230px');
                     $('#content').css({
                         'left': '0',
                         'width': '100vw'
@@ -139,19 +146,33 @@ async function run() {
             updateContent() {
                 if (this.curId == -1) {
                     this.addNote();
-                    this.chgContent(0)
+                    this.chgContent(0);
                 }
                 let ncontent = $('.main').html();
                 this.notes[this.curId].content = ncontent;
                 this.notes[this.curId].title = lib.getTitle(ncontent);
-                this.notes[this.curId].summary = lib.getSummary(ncontent)
-                this.chgCnt++
-            }
+                this.notes[this.curId].summary = lib.getSummary(ncontent);
 
+                $('title').text(this.notes[this.curId].title + ' - ●');
+                this.chgCnt++;
+            },
+            search() {
+                this.searchTag = $('#search').val();
+            },
+        },
+        computed: {
+            filteredNotes() {
+                let stuff = this.notes.filter((note: Note) => note.content.includes(this.searchTag));
+                console.log(stuff);
+                return stuff;
+            }
         },
     })
 
     noteBlock.chgContent(0);
+
+    ipcRenderer.on('save', noteBlock.save);
+    ipcRenderer.on('new-note', noteBlock.addNote);
 }
 
 run()

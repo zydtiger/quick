@@ -14,7 +14,7 @@ export default {
     },
 
     parseHTML(htmlsrc: string): string {
-        let tmp = document.createElement('div')
+        let tmp = document.createElement('div');
         $(tmp).html(htmlsrc);
         return $(tmp).text();
     },
@@ -22,25 +22,29 @@ export default {
 
     getTitle(noteContent: string): string {
         let title: string;
-        let lineBreak = noteContent.indexOf('<div>')
-        if (lineBreak != -1) title = noteContent.substring(0, lineBreak)
-        else title = this.parseHTML(noteContent)
-        title = title || 'New Note'
-        return title.length < 12 ? title : title.substr(0, 12) + '...'
+        let lineBreak = noteContent.indexOf('<div>');
+        if (lineBreak != -1) title = noteContent.substring(0, lineBreak);
+        else title = this.parseHTML(noteContent);
+        title = title || 'New Note';
+        return title;
     },
 
     getTitles(notes: Array<Note>) {
         for (let note of notes)
-            note.title = this.getTitle(note.content)
+            note.title = this.getTitle(note.content);
     },
 
     getSummary(noteContent: string): string {
-        let parsedContent = this.parseHTML(noteContent);
-        return parsedContent.length < 30 ? parsedContent : parsedContent.substr(0, 30) + '...'
+        let summary: string;
+        let lineBreak = noteContent.indexOf('<div>');
+        if (lineBreak != -1) summary = noteContent.substr(lineBreak);
+        else summary = noteContent;
+        summary = this.parseHTML(summary) || 'Type Something';
+        return summary;
     },
 
-    getSummaries(notes: Array<Note>) {
+    getSummaries(notes: Array<Note>): void {
         for (let note of notes)
-            note.summary = this.getSummary(note.content)
+            note.summary = this.getSummary(note.content);
     }
 }

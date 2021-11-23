@@ -27,9 +27,7 @@ body {
   overflow: hidden;
 }
 
-.footer-btn {
-  width: @footerHeight;
-  height: 100%;
+.classic-btn {
   color: @btnColor;
   user-select: none;
 
@@ -40,6 +38,13 @@ body {
   &:active {
     background-color: @darkActive;
   }
+}
+
+.footer-btn {
+  .classic-btn();
+
+  width: @footerHeight;
+  height: 100%;
 }
 
 .note-btn {
