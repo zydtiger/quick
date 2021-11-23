@@ -19,13 +19,12 @@ export default {
         return $(tmp).text();
     },
 
-
     getTitle(noteContent: string): string {
         let title: string;
         let lineBreak = noteContent.indexOf('<div>');
         if (lineBreak != -1) title = noteContent.substring(0, lineBreak);
-        else title = this.parseHTML(noteContent);
-        title = title || 'New Note';
+        else title = noteContent;
+        title = this.parseHTML(title) || 'New Note';
         return title;
     },
 
