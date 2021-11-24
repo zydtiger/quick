@@ -1,7 +1,7 @@
 {
   "name": "quick",
   "productName": "quick",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
@@ -19,21 +19,16 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "./favicon.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-wix",
           "config": {
             "manufacturer": "com.ohzyd.top",
             "name": "quick",
-            "appIconPath": "./favicon.ico",
             "arch": "x64"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "quick"
           }
         },
         {
@@ -85,6 +80,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.0",
+    "copy-webpack-plugin": "^10.0.0",
     "css-loader": "^6.5.1",
     "electron": "15.3.1",
     "eslint": "^7.32.0",

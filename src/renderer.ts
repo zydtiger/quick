@@ -173,6 +173,20 @@ async function run() {
 
     ipcRenderer.on('save', noteBlock.save);
     ipcRenderer.on('new-note', noteBlock.addNote);
+    ipcRenderer.on('closing', () => {
+        if (noteBlock.chgCnt > 0) {
+            ipcRenderer.invoke('message-box', {
+                type: 'question',
+                title: 'Save',
+                message: 'Do you want to save unsaved changes?',
+                buttons: ['Yes', 'No'],
+            }).then(res => {
+                if (res.response == 0)
+                    noteBlock.save();
+                ipcRenderer.send('close-window');
+            })
+        } else ipcRenderer.send('close-window');
+    })
 }
 
-run()
+$(() => run())

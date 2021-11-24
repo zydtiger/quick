@@ -3,7 +3,7 @@ import path from 'path';
 
 let mainWindow: BrowserWindow;
 
-export function initWindow(): BrowserWindow {
+export function initWindow(): void {
     // Create the browser window.
     mainWindow = new BrowserWindow({
         height: 600,
@@ -15,8 +15,6 @@ export function initWindow(): BrowserWindow {
             zoomFactor: 1.0,
         }
     });
-
-    return mainWindow;
 }
 
 export {

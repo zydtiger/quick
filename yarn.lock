@@ -992,6 +992,11 @@ array-union@^2.1.0:
   resolved "https://registry.npm.taobao.org/array-union/download/array-union-2.1.0.tgz?cache=0&sync_timestamp=1614624302839&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Farray-union%2Fdownload%2Farray-union-2.1.0.tgz#b798420adbeb1de828d84acd8a2e23d3efe85e8d"
   integrity sha1-t5hCCtvrHego2ErNii4j0+/oXo0=
 
+array-union@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npm.taobao.org/array-union/download/array-union-3.0.1.tgz?cache=0&sync_timestamp=1614624262896&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Farray-union%2Fdownload%2Farray-union-3.0.1.tgz#da52630d327f8b88cfbfb57728e2af5cd9b6b975"
+  integrity sha1-2lJjDTJ/i4jPv7V3KOKvXNm2uXU=
+
 array.prototype.flat@^1.2.5:
   version "1.2.5"
   resolved "https://registry.npmmirror.com/array.prototype.flat/download/array.prototype.flat-1.2.5.tgz?cache=0&sync_timestamp=1633109609894&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Farray.prototype.flat%2Fdownload%2Farray.prototype.flat-1.2.5.tgz#07e0975d84bbc7c48cd1879d609e682598d33e13"
@@ -1619,6 +1624,18 @@ copy-anything@^2.0.1:
   integrity sha1-hCQHugJGaw34RIGbvjuuu+XUXYc=
   dependencies:
     is-what "^3.12.0"
+
+copy-webpack-plugin@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.npmmirror.com/copy-webpack-plugin/download/copy-webpack-plugin-10.0.0.tgz?cache=0&sync_timestamp=1637161372227&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fcopy-webpack-plugin%2Fdownload%2Fcopy-webpack-plugin-10.0.0.tgz#f25a29ca2398a6ca31183b62e76adacb53b981d1"
+  integrity sha512-tuCVuFMBbRsb7IH0q1CUb50/Skv+7a6c7DJ+xi4fAbOzNLTYVMUTPnf8uGvKPtmqTvzYBrfEFo7YgP4TsUWmtg==
+  dependencies:
+    fast-glob "^3.2.7"
+    glob-parent "^6.0.1"
+    globby "^12.0.2"
+    normalize-path "^3.0.0"
+    schema-utils "^4.0.0"
+    serialize-javascript "^6.0.0"
 
 core-util-is@1.0.2:
   version "1.0.2"
@@ -2961,6 +2978,13 @@ glob-parent@^5.1.2, glob-parent@~5.1.2:
   dependencies:
     is-glob "^4.0.1"
 
+glob-parent@^6.0.1:
+  version "6.0.2"
+  resolved "https://registry.npmmirror.com/glob-parent/download/glob-parent-6.0.2.tgz#6d237d99083950c79290f24c7642a3de9a28f9e3"
+  integrity sha1-bSN9mQg5UMeSkPJMdkKj3poo+eM=
+  dependencies:
+    is-glob "^4.0.3"
+
 glob-to-regexp@^0.4.1:
   version "0.4.1"
   resolved "https://registry.nlark.com/glob-to-regexp/download/glob-to-regexp-0.4.1.tgz#c75297087c851b9a578bd217dd59a92f59fe546e"
@@ -3053,6 +3077,18 @@ globby@^11.0.1, globby@^11.0.3:
     ignore "^5.1.4"
     merge2 "^1.3.0"
     slash "^3.0.0"
+
+globby@^12.0.2:
+  version "12.0.2"
+  resolved "https://registry.nlark.com/globby/download/globby-12.0.2.tgz#53788b2adf235602ed4cabfea5c70a1139e1ab11"
+  integrity sha1-U3iLKt8jVgLtTKv+pccKETnhqxE=
+  dependencies:
+    array-union "^3.0.1"
+    dir-glob "^3.0.1"
+    fast-glob "^3.2.7"
+    ignore "^5.1.8"
+    merge2 "^1.4.1"
+    slash "^4.0.0"
 
 got@^11.7.0:
   version "11.8.3"
@@ -4164,7 +4200,7 @@ merge-stream@^2.0.0:
   resolved "https://registry.npm.taobao.org/merge-stream/download/merge-stream-2.0.0.tgz#52823629a14dd00c9770fb6ad47dc6310f2c1f60"
   integrity sha1-UoI2KaFN0AyXcPtq1H3GMQ8sH2A=
 
-merge2@^1.3.0:
+merge2@^1.3.0, merge2@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/merge2/download/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha1-Q2iJL4hekHRVpv19xVwMnUBJkK4=
@@ -5693,6 +5729,11 @@ slash@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/slash/download/slash-3.0.0.tgz?cache=0&sync_timestamp=1618384508676&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fslash%2Fdownload%2Fslash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha1-ZTm+hwwWWtvVJAIg2+Nh8bxNRjQ=
+
+slash@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.nlark.com/slash/download/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
+  integrity sha1-JCI3IXbExsWt214q2oha+YSzlqc=
 
 slice-ansi@^4.0.0:
   version "4.0.0"

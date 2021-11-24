@@ -15,7 +15,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
-// declare let mainWindow: BrowserWindow;
+let closeUnconfirmed = true;
 
 const createWindow = (): void => {
   initWindow();
@@ -24,9 +24,18 @@ const createWindow = (): void => {
   const menu = Menu.buildFromTemplate(menu_template);
   Menu.setApplicationMenu(menu);
 
+
+  mainWindow.on('close', (e) => {
+    if (closeUnconfirmed) {
+      e.preventDefault();
+      mainWindow.webContents.send('closing');
+    }
+  })
+
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 };
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -52,6 +61,11 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+ipcMain.on('close-window', () => {
+  closeUnconfirmed = false;
+  mainWindow.close();
+});
+
 let prev_width: number;
 
 ipcMain.on('resize-width', (_, nw) => {
@@ -102,5 +116,5 @@ ipcMain.on('save-notes', (_, nnotes) => {
 })
 
 ipcMain.handle('message-box', (_, args) => {
-  return dialog.showMessageBox(args)
+  return dialog.showMessageBox(args);
 })
