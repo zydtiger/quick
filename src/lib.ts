@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
 export interface Note {
+    id: number,
     title: string,
     content: string,
     date: string,
@@ -45,5 +46,10 @@ export default {
     getSummaries(notes: Array<Note>): void {
         for (let note of notes)
             note.summary = this.getSummary(note.content);
+    },
+
+    getIds(notes: Array<Note>): void {
+        for (let i in notes)
+            notes[i].id = parseInt(i);
     }
 }

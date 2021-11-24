@@ -22,7 +22,7 @@
 
             <div id="menu">
                 <ul>
-                    <li v-for="(note, id) in filteredNotes" @click="chgContent(id)" :class="{ active : id == curId }">
+                    <li v-for="note in filteredNotes" @click="chgContent(note.id)" :class="{ active : note.id == curId }">
                         <h4>{{ note.title }}</h4>
                         <div class="date">{{ note.date }}</div>
                         <div class="summary">{{ note.summary }}</div>

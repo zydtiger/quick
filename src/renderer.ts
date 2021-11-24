@@ -43,10 +43,12 @@ function removeIndex(arr: Array<Object>, index: number) {
 
 async function run() {
     let notes: Array<Note> = await ipcRenderer.invoke('get-notes');
-    console.log('notes: ', notes);
 
     lib.getTitles(notes);
     lib.getSummaries(notes);
+    lib.getIds(notes);
+
+    console.log('notes: ', notes);
 
     let noteBlock = new Vue({
         el: '#note-block',
@@ -94,6 +96,7 @@ async function run() {
                     content: '',
                     date: lib.newNoteDate(),
                 });
+                lib.getIds(this.notes);
                 this.chgContent(0);
                 this.save();
             },
@@ -107,10 +110,11 @@ async function run() {
                     if (res.response == 0) {
                         this.notes = removeIndex(this.notes, this.curId);
                         if (this.curId > 0)
-                            this.chgContent(this.curId-1);
+                            this.chgContent(this.curId - 1);
                         else if (this.notes.length > 0)
                             this.chgContent(this.curId);
                         else this.curId = -1;
+                        lib.getIds(this.notes);
                         this.save();
                     }
                 })
@@ -162,9 +166,9 @@ async function run() {
         },
         computed: {
             filteredNotes() {
-                let stuff = this.notes.filter((note: Note) => note.content.includes(this.searchTag));
-                console.log(stuff);
-                return stuff;
+                let tmp = this.notes.filter((note: Note) => note.content.includes(this.searchTag));
+                console.log(tmp);
+                return tmp;
             }
         },
     })

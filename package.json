@@ -20,7 +20,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./favicon.ico"
+        "icon": "./favicon.ico",
+        "asar": true
       },
       "makers": [
         {
