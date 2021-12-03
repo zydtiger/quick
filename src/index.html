@@ -51,7 +51,6 @@
             </div>
         </div>
 
-
         <div id="content">
             <div class="main" contenteditable="true" @input="updateContent" v-html="curContent"></div>
             <!-- <textarea class="main" @input="updateContent"></textarea> -->
@@ -78,6 +77,41 @@
                 </div>
                 <div class="footer-btn note-btn" onclick="document.execCommand('underline')" style="text-decoration: underline;">
                     <div>U</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="save-on-close" data-toggle="modal" data-target="#save-on-close-modal"></div>
+    <div class="modal fade" id="save-on-close-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Save</h4>
+                </div>
+                <div class="modal-body">Do you want to save on close?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @click="saveNotes">Save</button>
+                    <button type="button" class="btn btn-danger" @click="closeWindow">Don't Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-del" data-toggle="modal" data-target="#confirm-del-modal"></div>
+    <div class="modal fade" id="confirm-del-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Delete</h4>
+                </div>
+                <div class="modal-body">Do you confirm deletion?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" @click="delConfirmed">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

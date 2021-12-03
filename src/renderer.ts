@@ -26,15 +26,15 @@
  * ```
  */
 
-import '../lib/bootstrap-3.4.1-dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap'
 import '../lib/font-awesome-4.7.0/css/font-awesome.min.css';
 import './index.less';
 import './content.less';
 import './menu.less';
 import './scheme.less'
-import $ from 'jquery';
 import Vue from 'vue';
-import { ipcRenderer, Menu, MenuItem, MenuItemConstructorOptions } from 'electron';
+import { ipcRenderer } from 'electron';
 import lib, { Note } from './lib';
 
 function removeIndex(arr: Array<Object>, index: number) {
@@ -49,6 +49,31 @@ function removeIndex(arr: Array<Object>, index: number) {
     lib.getIds(notes);
 
     console.log('notes: ', notes);
+
+    let saveOnClose = new Vue({
+        el: '#save-on-close-modal',
+        methods: {
+            saveNotes() {
+                noteBlock.save();
+                this.closeWindow();
+            },
+            closeWindow() {
+                window.onkeydown = e => {};
+                ipcRenderer.send('close-window');
+            }
+        }
+    })
+
+    let confirmDel = new Vue({
+        el: '#confirm-del-modal',
+        methods: {
+            delConfirmed() {
+                $('#confirm-del').trigger('click');
+                window.onkeydown = e => {};
+                noteBlock.delNoteWithoutConfirm();
+            }
+        }
+    });
 
     let noteBlock = new Vue({
         el: '#note-block',
@@ -101,23 +126,20 @@ function removeIndex(arr: Array<Object>, index: number) {
                 this.save();
             },
             delNote() {
-                ipcRenderer.invoke('message-box', {
-                    type: 'question',
-                    title: 'Confirm Deletion',
-                    message: 'Are you sure?',
-                    buttons: ['OK', 'Cancel'],
-                }).then(res => {
-                    if (res.response == 0) {
-                        this.notes = removeIndex(this.notes, this.curId);
-                        if (this.curId > 0)
-                            this.chgContent(this.curId - 1);
-                        else if (this.notes.length > 0)
-                            this.chgContent(this.curId);
-                        else this.curId = -1;
-                        lib.getIds(this.notes);
-                        this.save();
-                    }
-                })
+                $('#confirm-del').trigger('click');
+                window.onkeydown = e => {
+                    if (e.key == 'Enter') confirmDel.delConfirmed();
+                }
+            },
+            delNoteWithoutConfirm() {
+                this.notes = removeIndex(this.notes, this.curId);
+                if (this.curId > 0)
+                    this.chgContent(this.curId - 1);
+                else if (this.notes.length > 0)
+                    this.chgContent(this.curId);
+                else this.curId = -1;
+                lib.getIds(this.notes);
+                this.save();
             },
             chgContent(id: number) {
                 if (id >= this.notes.length) return;
@@ -157,8 +179,6 @@ function removeIndex(arr: Array<Object>, index: number) {
                 this.notes[this.curId].title = lib.getTitle(ncontent);
                 this.notes[this.curId].summary = lib.getSummary(ncontent);
 
-                // this.curContent = this.notes[this.curId].content;
-
                 $('title').text(this.notes[this.curId].title + ' ●');
                 this.chgCnt++;
             },
@@ -179,22 +199,19 @@ function removeIndex(arr: Array<Object>, index: number) {
 
     ipcRenderer.on('save', noteBlock.save);
     ipcRenderer.on('new-note', noteBlock.addNote);
+    ipcRenderer.on('search-note', () => {
+        console.log("wewe")
+        noteBlock.searchToggled = !noteBlock.searchToggled;
+    })
+    ipcRenderer.on('del-note', noteBlock.delNote)
     ipcRenderer.on('closing', () => {
-        if (noteBlock.chgCnt > 0) {
-            ipcRenderer.invoke('message-box', {
-                type: 'question',
-                title: 'Save',
-                message: 'Do you want to save unsaved changes?',
-                buttons: ['Yes', 'No'],
-            }).then(res => {
-                if (res.response == 0)
-                    noteBlock.save();
-                ipcRenderer.send('close-window');
-            })
-        } else ipcRenderer.send('close-window');
+        $('#save-on-close').trigger('click')
+        window.onkeydown = e => {
+            if (e.key == 'Enter') saveOnClose.saveNotes();
+        }
     })
     ipcRenderer.on('bold', () => {
-        document.execCommand('bold');   
+        document.execCommand('bold');
     })
     ipcRenderer.on('italic', () => {
         document.execCommand('italic');
@@ -202,4 +219,6 @@ function removeIndex(arr: Array<Object>, index: number) {
     ipcRenderer.on('underline', () => {
         document.execCommand('underline');
     })
+
+    // $('#save-on-close').trigger('click')
 })();

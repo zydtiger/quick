@@ -1,18 +1,30 @@
-import { mainWindow } from './window';
+import {
+    mainWindow
+} from './window';
 
-const template = [
-    {
+const template = [{
         label: 'File',
         submenu: [{
-            label: 'New note',
-            accelerator: 'Ctrl+N',
-            click: () => mainWindow.webContents.send('new-note')
-        }, ]
+                label: 'Search notes',
+                accelerator: 'Ctrl+Shift+P',
+                click: () => mainWindow.webContents.send('search-note')
+            },
+            {
+                type: 'separator'
+            }, {
+                label: 'Delete note',
+                accelerator: 'Ctrl+Delete',
+                click: () => mainWindow.webContents.send('del-note')
+            }, {
+                label: 'New note',
+                accelerator: 'Ctrl+N',
+                click: () => mainWindow.webContents.send('new-note')
+            },
+        ]
     },
     {
         label: 'Edit',
-        submenu: [
-            {
+        submenu: [{
                 label: 'Bold',
                 accelerator: 'Ctrl+B',
                 click: () => mainWindow.webContents.send('bold')
