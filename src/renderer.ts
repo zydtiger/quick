@@ -58,7 +58,7 @@ function removeIndex(arr: Array<Object>, index: number) {
                 this.closeWindow();
             },
             closeWindow() {
-                window.onkeydown = e => {};
+                window.onkeydown = e => { };
                 ipcRenderer.send('close-window');
             }
         }
@@ -69,7 +69,7 @@ function removeIndex(arr: Array<Object>, index: number) {
         methods: {
             delConfirmed() {
                 $('#confirm-del').trigger('click');
-                window.onkeydown = e => {};
+                window.onkeydown = e => { };
                 noteBlock.delNoteWithoutConfirm();
             }
         }
@@ -205,10 +205,12 @@ function removeIndex(arr: Array<Object>, index: number) {
     })
     ipcRenderer.on('del-note', noteBlock.delNote)
     ipcRenderer.on('closing', () => {
-        $('#save-on-close').trigger('click')
-        window.onkeydown = e => {
-            if (e.key == 'Enter') saveOnClose.saveNotes();
-        }
+        if (noteBlock.chgCnt > 0) {
+            $('#save-on-close').trigger('click')
+            window.onkeydown = e => {
+                if (e.key == 'Enter') saveOnClose.saveNotes();
+            }
+        } else saveOnClose.closeWindow();
     })
     ipcRenderer.on('bold', () => {
         document.execCommand('bold');
