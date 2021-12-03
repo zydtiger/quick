@@ -15,15 +15,16 @@
                 <div :class="{ 'fa fa-search' : !searchToggled, 'fa fa-times' : searchToggled }"></div>
             </div>
             <div class="search_wrapper" v-if="searchToggled">
-                <input type="text" id="search" @input="search"/>
+                <input type="text" id="search" @input="search" />
                 <div class="fa fa-search"></div>
             </div>
             <hr>
 
             <div id="menu">
                 <ul>
-                    <li v-for="note in filteredNotes" @click="chgContent(note.id)" :class="{ active : note.id == curId }">
-                        <h4>{{ note.title }}</h4>
+                    <li v-for="note in filteredNotes" @click="chgContent(note.id)"
+                        :class="{ active : note.id == curId }">
+                        <h4 v-html="note.title"></h4>
                         <div class="date">{{ note.date }}</div>
                         <div class="summary">{{ note.summary }}</div>
                     </li>
@@ -41,7 +42,7 @@
                 </div>
 
                 <div id="add-btn" class="footer-btn note-btn" title="Adds a new note" @click="addNote">
-                    <div>+</div>
+                    <div style="font-size: 16px;">+</div>
                 </div>
 
                 <div id="del-btn" class="footer-btn note-btn" title="Deletes a note" @click="delNote">
@@ -53,6 +54,7 @@
 
         <div id="content">
             <div class="main" contenteditable="true" @input="updateContent" v-html="curContent"></div>
+            <!-- <textarea class="main" @input="updateContent"></textarea> -->
 
             <div class="footer">
                 <div id="toggle-menu" title="Toggles the Menu" class="toggle-btn" @click="toggleMenu"
@@ -62,6 +64,20 @@
                         <div class="circle-border"></div>
                         <div class="circle-fill"></div>
                     </div>
+                </div>
+
+                <div class="footer-btn note-btn" onclick="document.execCommand('bold')">
+                    <div>
+                        <b>B</b>
+                    </div>
+                </div>
+                <div class="footer-btn note-btn" onclick="document.execCommand('italic')">
+                    <div>
+                        <i>I</i>
+                    </div>
+                </div>
+                <div class="footer-btn note-btn" onclick="document.execCommand('underline')" style="text-decoration: underline;">
+                    <div>U</div>
                 </div>
             </div>
         </div>

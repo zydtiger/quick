@@ -11,7 +11,26 @@ const template = [
     },
     {
         label: 'Edit',
-        submenu: [{
+        submenu: [
+            {
+                label: 'Bold',
+                accelerator: 'Ctrl+B',
+                click: () => mainWindow.webContents.send('bold')
+            },
+            {
+                label: 'Italicize',
+                accelerator: 'Ctrl+I',
+                click: () => mainWindow.webContents.send('italic')
+            },
+            {
+                label: 'Underline',
+                accelerator: 'Ctrl+U',
+                click: () => mainWindow.webContents.send('underline')
+            },
+            {
+                type: 'separator'
+            },
+            {
                 label: 'Copy',
                 role: 'copy',
                 accelerator: 'Ctrl+C',
@@ -94,4 +113,4 @@ const template = [
 
 export {
     template
-}
+};

@@ -1,7 +1,7 @@
 {
   "name": "quick",
   "productName": "quick",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
@@ -9,7 +9,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "rebuild": "npm rebuild --runtime=electron --target=15.3.1 --disturl=https://atom.io/download/atom-shell --abi=93"
   },
   "keywords": [],
   "author": {
@@ -84,6 +85,7 @@
     "copy-webpack-plugin": "^10.0.0",
     "css-loader": "^6.5.1",
     "electron": "15.3.1",
+    "electron-context-menu": "^3.1.1",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "exe-icon-extractor": "^1.0.8",
@@ -92,7 +94,9 @@
     "jquery": "^3.6.0",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
+    "node-key-sender": "^1.0.11",
     "node-loader": "^2.0.0",
+    "robotjs": "^0.6.0",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
     "typescript": "^4.4.4",

@@ -34,14 +34,14 @@ import './menu.less';
 import './scheme.less'
 import $ from 'jquery';
 import Vue from 'vue';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, Menu, MenuItem, MenuItemConstructorOptions } from 'electron';
 import lib, { Note } from './lib';
 
 function removeIndex(arr: Array<Object>, index: number) {
     return arr.slice(0, index).concat(arr.slice(index + 1, arr.length));
 }
 
-async function run() {
+(async () => {
     let notes: Array<Note> = await ipcRenderer.invoke('get-notes');
 
     lib.getTitles(notes);
@@ -83,8 +83,8 @@ async function run() {
                     $('#content').css('left', '230px');
                     ipcRenderer.send('restore-width');
                 } else {
-                    $('#menu-wrapper').css('width', '400px');
-                    $('#content').css('left', '400px');
+                    $('#menu-wrapper').css('width', '100%');
+                    $('#content').css('left', '100%');
                     ipcRenderer.send('resize-width', 400);
                 }
 
@@ -157,7 +157,9 @@ async function run() {
                 this.notes[this.curId].title = lib.getTitle(ncontent);
                 this.notes[this.curId].summary = lib.getSummary(ncontent);
 
-                $('title').text(this.notes[this.curId].title + ' - ●');
+                // this.curContent = this.notes[this.curId].content;
+
+                $('title').text(this.notes[this.curId].title + ' ●');
                 this.chgCnt++;
             },
             search() {
@@ -191,6 +193,13 @@ async function run() {
             })
         } else ipcRenderer.send('close-window');
     })
-}
-
-$(() => run())
+    ipcRenderer.on('bold', () => {
+        document.execCommand('bold');   
+    })
+    ipcRenderer.on('italic', () => {
+        document.execCommand('italic');
+    })
+    ipcRenderer.on('underline', () => {
+        document.execCommand('underline');
+    })
+})();

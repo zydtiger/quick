@@ -13,6 +13,7 @@ export function initWindow(): void {
             nodeIntegration: true,
             contextIsolation: false,
             zoomFactor: 1.0,
+            spellcheck: false,
         }
     });
 }
