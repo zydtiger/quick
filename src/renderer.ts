@@ -174,10 +174,23 @@ function removeIndex(arr: Array<Object>, index: number) {
                     this.addNote();
                     this.chgContent(0);
                 }
+
+                if (this.curId !== 0) {
+                    let curNote = this.notes[this.curId];
+                    let tmp = lib.remove(this.notes, this.curId);
+                    tmp.unshift(curNote);
+                    lib.getIds(tmp as Array<Note>);
+                    this.curId = 0;
+                    $('#menu').scrollTop(0);
+                    this.notes = tmp;
+                    // console.log('shifting', tmp);
+                }
+
                 let ncontent = $('.main').html();
                 this.notes[this.curId].content = ncontent;
                 this.notes[this.curId].title = lib.getTitle(ncontent);
                 this.notes[this.curId].summary = lib.getSummary(ncontent);
+                this.notes[this.curId].date = lib.newNoteDate();
 
                 $('title').text(this.notes[this.curId].title + ' ●');
                 this.chgCnt++;
@@ -189,9 +202,9 @@ function removeIndex(arr: Array<Object>, index: number) {
         computed: {
             filteredNotes() {
                 let tmp = this.notes.filter((note: Note) => note.content.includes(this.searchTag));
-                console.log(tmp);
+                // console.log(tmp);
                 return tmp;
-            }
+            },
         },
     })
 
@@ -212,15 +225,6 @@ function removeIndex(arr: Array<Object>, index: number) {
             }
         } else saveOnClose.closeWindow();
     })
-    ipcRenderer.on('bold', () => {
-        document.execCommand('bold');
-    })
-    ipcRenderer.on('italic', () => {
-        document.execCommand('italic');
-    })
-    ipcRenderer.on('underline', () => {
-        document.execCommand('underline');
-    })
+    ipcRenderer.on('exec', (_, cmd) => document.execCommand(cmd));
 
-    // $('#save-on-close').trigger('click')
 })();

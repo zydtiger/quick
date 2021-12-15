@@ -27,17 +27,22 @@ const template = [{
         submenu: [{
                 label: 'Bold',
                 accelerator: 'Ctrl+B',
-                click: () => mainWindow.webContents.send('bold')
+                click: () => mainWindow.webContents.send('exec', 'bold')
             },
             {
                 label: 'Italicize',
                 accelerator: 'Ctrl+I',
-                click: () => mainWindow.webContents.send('italic')
+                click: () => mainWindow.webContents.send('exec', 'italic')
             },
             {
                 label: 'Underline',
                 accelerator: 'Ctrl+U',
-                click: () => mainWindow.webContents.send('underline')
+                click: () => mainWindow.webContents.send('exec', 'underline')
+            },
+            {
+                label: 'Cross out',
+                accelerator: 'Ctrl+Shift+-',
+                click: () => mainWindow.webContents.send('exec', 'strikeThrough')
             },
             {
                 type: 'separator'

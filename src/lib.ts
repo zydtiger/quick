@@ -11,7 +11,7 @@ export interface Note {
 export default {
     newNoteDate() {
         let date = new Date();
-        return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
+        return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
     },
 
     parseHTML(htmlsrc: string): string {
@@ -23,6 +23,10 @@ export default {
     insert(src: string, index: number, str: string): string {
         let res = src.substring(0,index) + str + src.substr(index);
         return res;
+    },
+
+    remove<T>(src: Array<T>, index: number): Array<T> {
+        return src.slice(0,index).concat(src.slice(index+1));
     },
 
     getTitle(noteContent: string): string {
